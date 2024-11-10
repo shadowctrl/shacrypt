@@ -1,21 +1,15 @@
-$font-sizes: (
-    "12": 0.75rem,
-    "14": 0.875rem,
-    "16": 1rem,
-    "18": 1.125rem,
-    "24": 1.5rem,
-    "26": 1.625rem,
-    "32": 2rem,
-    "34": 2.125rem,
-    "38": 2.375rem,
-    "42": 2.625rem,
-    "48": 3rem,
-    "64": 4rem
-);
-
-@function font-size($size) {
-    @return map-get($font-sizes, $size);
-}
+$font16: 1rem;
+$font12: 0.75rem;
+$font14: 0.875rem;
+$font18: 1.125rem;
+$font24: 1.5rem;
+$font26: 1.625rem;
+$font32: 2rem;
+$font34: 2.125rem;
+$font38: 2.375rem;
+$font42: 2.625rem;
+$font48: 3rem;
+$font64: 4rem;
 
 $pri-col: #fd79a8;
 $poppins: var(--font-poppins);

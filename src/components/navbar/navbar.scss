@@ -1,0 +1,27 @@
+@use "@/styles/styles" as *;
+
+.navbar-parent {
+    padding: 1vw;
+    @include flex-center();
+    justify-content: space-between;
+    backdrop-filter: blur(3px);
+    border-bottom: 2px solid $pri-col;
+    font-family: $poppins;
+
+    .navbar-head {
+        font-family: var(--font-geist-sans);
+        font-size: $font18;
+        font-weight: 600;
+        @include flex-center();
+    }
+    .navbar-components {
+        @include flex-center();
+        gap: 1vw;
+    }
+
+    .navbar-tail {
+        font-family: var(--font-geist-sans);
+        font-size: font-size("18");
+        font-weight: 600;
+    }
+}
