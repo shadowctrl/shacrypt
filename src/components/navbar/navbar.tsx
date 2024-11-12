@@ -17,10 +17,10 @@ const navbarItems = [
 const Navbar: NextPage<Props> = ({}) => {
   return (
     <div className="navbar-parent">
-      <div className="navbar-head">
+      <Link className="navbar-head" href={"/"}>
         <Image src={BlockchainLogo} alt="shacrypt" />
         <h1>SHACRYPT</h1>
-      </div>
+      </Link>
       <div className="navbar-components">
         {navbarItems.map((value) => (
           <div className="navbar-components-item" key={value.path}>
