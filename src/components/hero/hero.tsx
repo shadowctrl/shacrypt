@@ -2,6 +2,8 @@
 import { NextPage } from "next";
 import "./hero.scss";
 import Loader from "../loader/loader";
+import { useContext } from "react";
+import { TransactionContext } from "@/context/TransactionContext";
 interface Props {}
 
 type inputProps = {
@@ -29,8 +31,23 @@ const Input = ({
 );
 
 const Hero: NextPage<Props> = ({}) => {
-  const connectWallet = () => {};
-  const handleSubmit = () => {};
+  const {
+    connectWallet,
+    connectedAccount,
+    formData,
+    setFormData,
+    handleChange,
+    sendTransaction,
+  } = useContext(TransactionContext);
+
+  const handleSubmit = (e) => {
+    const { addressTo, amount, keyword, message } = formData;
+    e.preventDefault();
+    console.log(formData);
+    if (!addressTo || !amount || !keyword || !message)
+      return alert("Fill all fields");
+    sendTransaction();
+  };
   return (
     <div className="hero-parent">
       <div className="hero-left"></div>
@@ -47,27 +64,27 @@ const Hero: NextPage<Props> = ({}) => {
         <div className="hero-right-bottom">
           <Input
             placeholder={"Address to"}
-            name="adddressTo"
+            name="addressTo"
             type="text"
-            handleChange={() => {}}
+            handleChange={handleChange}
           />
           <Input
             placeholder={"Amount (ETH)"}
             name="amount"
             type="number"
-            handleChange={() => {}}
+            handleChange={handleChange}
           />
           <Input
             placeholder={"Keyword (GIF)"}
             name="keyword"
             type="text"
-            handleChange={() => {}}
+            handleChange={handleChange}
           />
           <Input
             placeholder={"Enter Message"}
             name="message"
             type="text"
-            handleChange={() => {}}
+            handleChange={handleChange}
           />
           <div className="border-line" />
           <div />
@@ -77,7 +94,7 @@ const Hero: NextPage<Props> = ({}) => {
           {false ? (
             <Loader />
           ) : (
-            <button type="button" onClick={handleSubmit}>
+            <button type="button" onClick={(e) => handleSubmit(e)}>
               Send Now
             </button>
           )}

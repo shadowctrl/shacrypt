@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
 import Navbar from "@/components/navbar/navbar";
 import "./globals.css";
+import { TransactionProvider } from "@/context/TransactionContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,8 +37,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
-        <Navbar />
-        {children}
+        {" "}
+        <Navbar /> <TransactionProvider>{children}</TransactionProvider>
       </body>
     </html>
   );
