@@ -56,7 +56,6 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
       keyword: transaction.keyword,
       amount: parseInt(transaction.amount._hex) / 10 ** 18,
     }));
-
     console.log(structuredTransactions);
 
     setTransactions(structuredTransactions);
