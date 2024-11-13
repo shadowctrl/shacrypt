@@ -27,6 +27,8 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
   const [transactionCount, setTransactionCount] = useState(
     localStorage.getItem("transactionCount")
   );
+  const [transactions, setTransactions] = useState([]);
+
   const [formData, setFormData] = useState({
     addressTo: "",
     amount: "",
@@ -38,10 +40,42 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
+  const getAllTransactions = async () => {
+    if (!ethereum) return alert("Please connect metamask");
+    const transactionContract = getEthereumContract();
+    const availableTransactions =
+      await transactionContract.getAllTransactions();
+
+    const structuredTransactions = availableTransactions.map((transaction) => ({
+      addressTo: transaction.receiver,
+      addressFrom: transaction.sender,
+      timestamp: new Date(
+        transaction.timestamp.toNumber() * 1000
+      ).toLocaleString(),
+      message: transaction.message,
+      keyword: transaction.keyword,
+      amount: parseInt(transaction.amount._hex) / 10 ** 18,
+    }));
+
+    console.log(structuredTransactions);
+
+    setTransactions(structuredTransactions);
+  };
+
+  const checkIfTransactionsExist = async () => {
+    const transactionContract = getEthereumContract();
+    const transactionCount = await transactionContract.getTransactionCount();
+    window.localStorage.setItem("transactionCount", transactionCount);
+  };
   const checkIfWalletIsConnected = async () => {
     if (!ethereum) return alert("Please connect metamask");
 
     const accounts = await ethereum.request({ method: "eth_accounts" });
+
+    if (accounts.length) {
+      setConnectedAccount(accounts[0]);
+      getAllTransactions();
+    }
   };
 
   const connectWallet = async () => {
@@ -88,6 +122,7 @@ export const TransactionProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     checkIfWalletIsConnected();
+    checkIfTransactionsExist();
   }, []);
   return (
     <TransactionContext.Provider

@@ -43,7 +43,6 @@ const Hero: NextPage<Props> = ({}) => {
   const handleSubmit = (e) => {
     const { addressTo, amount, keyword, message } = formData;
     e.preventDefault();
-    console.log(formData);
     if (!addressTo || !amount || !keyword || !message)
       return alert("Fill all fields");
     sendTransaction();
